@@ -1,26 +1,38 @@
-const display = document.querySelector('input');
-const container = document.querySelector('.calc');
+const display = document.querySelector('div');
+const container = document.querySelector('section');
 
 container.addEventListener('click', event => {
-
-    if (!event.target.innerText) return;
-
     if (event.target.innerText === '=') {
-        display.value = eval(display.value);
-
+        display.innerText = eval(display.innerText)
     } else if (event.target.innerText === 'AC') {
-        display.value = '';
-
+        display.innerText = ''
     } else if (event.target.innerText === '√') {
-        display.value = Math.sqrt(display.value);
-
+        display.innerText = Math.sqrt(display.innerText)
     } else if (event.target.innerText === 'C') {
-        display.value = String(display.value).substring(
-            0,
-            String(display.value).length - 1
-        );
-
-    } else {
-        display.value = display.value + event.target.innerText;
+        (display.innerText = String(display.innerText).substring(0, String((display.innerText).length - 1)))
+    } else{
+        display.innerText = display.innerText + event.target.innerText
     }
-});
+})
+
+const local = window.localStorage;
+const light = document.querySelector('.light');
+const dark = document.querySelector('.dark');
+
+if (local.getItem('color')) {
+    document.body.style.backgroundColor = local.getItem('color');
+} else {
+    local.setItem('color', 'black');
+    document.body.style.backgroundColor = local.getItem('color');
+}
+
+
+dark.addEventListener('click', () => {
+    local.setItem('color', 'black');
+    document.body.style.backgroundColor = local.getItem('color')
+})
+
+light.addEventListener('click', () => {
+    local.setItem('color', 'white');
+    document.body.style.backgroundColor = local.getItem('color')
+})
